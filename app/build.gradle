@@ -16,6 +16,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi 21
+
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -69,4 +73,15 @@ dependencies {
 
     // Do wstawiania plików na serwer
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
+
+    // DS Photo Editor SDK
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name:'ds-photo-editor-sdk-v10', ext:'aar')
+
+    // SDK related dependencies
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }

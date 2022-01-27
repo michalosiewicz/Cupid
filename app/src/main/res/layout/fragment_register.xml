@@ -58,6 +58,7 @@
             <Button
                 style="@style/Button"
                 android:layout_marginBottom="10dp"
+                android:enabled="@{viewModel.areInputsCorrect}"
                 android:onClick="@{()->viewModel.registerUser()}"
                 android:text="@string/signup" />
 

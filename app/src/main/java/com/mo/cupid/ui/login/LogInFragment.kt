@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.mo.cupid.R
 import com.mo.cupid.databinding.FragmentLogInBinding
+import com.mo.cupid.providers.MessageProvider
 
 class LogInFragment : Fragment() {
 
+    private lateinit var messageProvider: MessageProvider
     private val viewModel = LogInViewModel()
     private lateinit var binding: FragmentLogInBinding
 
@@ -36,17 +39,31 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        messageProvider = context?.let { MessageProvider(it) }!!
+
         viewModel.logInSuccess.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_logInFragment_to_menuFragment)
+            messageProvider.toastMessage(it)
+            val bundle = bundleOf(
+                "userName" to viewModel.userName.value
+            )
+            findNavController().navigate(R.id.action_logInFragment_to_joinEventFragment, bundle)
         }
 
         viewModel.logInError.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            messageProvider.toastMessage(it)
         }
 
         binding.register.setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_registerFragment)
+            viewModel.userName.value = ""
+            viewModel.password.value = ""
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                }
+            })
     }
 }

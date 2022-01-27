@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.event.join.JoinEventFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mo.cupid.ui.event.join.JoinEventViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="@string/joinEvent" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/eventName"
+                android:inputType="text"
+                android:text="@={viewModel.name}" />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}" />
+
+            <Button
+                style="@style/Button"
+                android:layout_marginBottom="20dp"
+                android:enabled="@{viewModel.areInputsCorrect}"
+                android:onClick="@{()->viewModel.joinEvent()}"
+                android:text="@string/join" />
+
+            <TextView
+                android:id="@+id/createEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="20dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="@string/createEventHere"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/logout"
+                style="@style/SmallButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/logout" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

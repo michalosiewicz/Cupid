@@ -9,10 +9,14 @@
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/drawable/ic_baseline_flip_camera_android_24.xml" value="0.3828125" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_camera.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_create_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_editor.xml" value="0.36096014492753625" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_gallery.xml" value="0.2796875" />
+        <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_join_event.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_log_in.xml" value="0.33" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="..\:/Users/micos/AndroidStudioProjects/Cupid/app/src/main/res/layout/item_photo.xml" value="0.348731884057971" />
       </map>
     </option>
   </component>

@@ -1,15 +1,27 @@
 <resources>
     <string name="app_name">Cupid</string>
-    <string name="username">Nazwa użytkownika</string>
-    <string name="password">Hasło</string>
-    <string name="login">Zaloguj się</string>
-    <string name="signuphere">Nie posiadasz konta? <u>Zarejestruj się</u></string>
+    <string name="username">User name</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="signuphere">You don\'t have an account? <u>Sign up</u></string>
     <string name="email">Email</string>
-    <string name="loginhere">Masz już konto? <u>Zaloguj się</u></string>
-    <string name="signup">Zarejestruj się</string>
-    <string name="takephoto">Zrób zdjęcie</string>
-    <string name="editphoto">Edytuj zdjęcie</string>
-    <string name="sendphoto">Wyślij zdjęcia</string>
+    <string name="loginhere">You already have an account? <u>Log in</u></string>
+    <string name="signup">Sign Up</string>
+    <string name="takephoto">Take photo</string>
+    <string name="editphoto">Edit photo</string>
+    <string name="sendphotos">Send photos</string>
+    <string name="sendphoto">Send photo</string>
+    <string name="selectImage">Select Image</string>
+    <string name="selectImages">Select Images</string>
+    <string name="createEvent">Create Event</string>
+    <string name="eventName">Event name</string>
+    <string name="joinEventHere">You want to join the event? <u>Join</u></string>
+    <string name="joinEvent">Join to event</string>
+    <string name="join">Join</string>
+    <string name="createEventHere">You want to create an event? <u>Create</u></string>
+    <string name="logout">Log out</string>
+    <string name="changeEvent">Change event</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

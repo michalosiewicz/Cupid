@@ -6,21 +6,41 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="30dp">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/eventName"
+            style="@style/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/userName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/takePhotoButton"
+            app:layout_constraintTop_toBottomOf="@id/eventName" />
 
         <Button
             android:id="@+id/takePhotoButton"
             style="@style/Button"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="30dp"
             android:text="@string/takephoto"
             app:layout_constraintBottom_toTopOf="@id/editButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/userName" />
 
         <Button
             android:id="@+id/editButton"
             style="@style/Button"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="30dp"
             android:text="@string/editphoto"
             app:layout_constraintBottom_toTopOf="@id/sendButton"
             app:layout_constraintTop_toBottomOf="@id/takePhotoButton" />
@@ -29,9 +49,32 @@
             android:id="@+id/sendButton"
             style="@style/Button"
             android:layout_width="match_parent"
-            android:text="@string/sendphoto"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="30dp"
+            android:text="@string/sendphotos"
+            app:layout_constraintBottom_toTopOf="@id/changeEvent"
             app:layout_constraintTop_toBottomOf="@id/editButton" />
+
+        <Button
+            android:id="@+id/changeEvent"
+            style="@style/SmallButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/changeEvent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/logout" />
+
+        <Button
+            android:id="@+id/logout"
+            style="@style/SmallButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/changeEvent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

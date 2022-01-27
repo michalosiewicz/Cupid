@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.gallery.GalleryFragment">
 
@@ -12,12 +13,33 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="30dp">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <Button
+            android:id="@+id/selectPhotos"
+            style="@style/Button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:text="@string/selectImages"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photosRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="8dp"
+            android:adapter="@{viewModel.photosAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/sendPhotos"
+            app:layout_constraintTop_toBottomOf="@+id/selectPhotos" />
+
+        <Button
+            android:id="@+id/sendPhotos"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:enabled="@{viewModel.isInput()}"
+            android:text="@string/sendphotos"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,9 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.mo.cupid.R
 import com.mo.cupid.databinding.FragmentRegisterBinding
+import com.mo.cupid.providers.MessageProvider
 
 class RegisterFragment : Fragment() {
 
+    private lateinit var messageProvider: MessageProvider
     private val viewModel = RegisterViewModel()
     private lateinit var binding: FragmentRegisterBinding
 
@@ -36,13 +38,15 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        messageProvider = context?.let { MessageProvider(it) }!!
+
         viewModel.registerInSuccess.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            messageProvider.toastMessage(it)
             findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
         }
 
         viewModel.registerInError.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            messageProvider.toastMessage(it)
         }
 
         binding.logIn.setOnClickListener {

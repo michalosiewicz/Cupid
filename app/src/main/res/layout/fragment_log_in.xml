@@ -48,19 +48,20 @@
 
             <Button
                 style="@style/Button"
+                android:layout_marginBottom="20dp"
+                android:enabled="@{viewModel.areInputsCorrect}"
                 android:onClick="@{()->viewModel.logIn()}"
-                android:text="@string/login"
-                android:layout_marginBottom="20dp"/>
+                android:text="@string/login" />
 
             <TextView
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="10dp"
                 android:layout_marginBottom="20dp"
-                android:textSize="18sp"
-                android:text="@string/signuphere" />
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="@string/signuphere"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

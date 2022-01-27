@@ -1,30 +1,25 @@
 package com.mo.cupid.ui.gallery
 
+import android.Manifest
 import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.mo.cupid.R
 import com.mo.cupid.databinding.FragmentGalleryBinding
-import java.util.ArrayList
+import com.mo.cupid.providers.MessageProvider
 
 class GalleryFragment : Fragment() {
 
-    private val pickImage = 1
-    var position = 0
-    var pickedImgUris = ArrayList<Uri>()
-
+    private lateinit var messageProvider: MessageProvider
     private lateinit var binding: FragmentGalleryBinding
-    private val viewModel = GalleryViewModel()
+    private lateinit var viewModel: GalleryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +32,11 @@ class GalleryFragment : Fragment() {
             false
         )
 
+        viewModel = GalleryViewModel(
+            arguments?.getString("userName") ?: "",
+            arguments?.getString("eventName") ?: ""
+        )
+
         return binding.apply {
             viewModel = this@GalleryFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -46,51 +46,48 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        openGallery()
-    }
+        messageProvider = context?.let { MessageProvider(it) }!!
 
+        viewModel.sendError.observe(viewLifecycleOwner) {
+            messageProvider.toastMessage(it)
+        }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === pickImage && resultCode === Activity.RESULT_OK && data != null) {
-            val imageView = binding.imageView
+        viewModel.sendSuccess.observe(viewLifecycleOwner) {
+            messageProvider.toastMessage(it)
+            val bundle = bundleOf(
+                "userName" to arguments?.getString("userName"),
+                "eventName" to arguments?.getString("eventName")
+            )
+            findNavController().navigate(R.id.action_galleryFragment_to_menuFragment, bundle)
+        }
 
-            if (data.clipData != null) {
-                val count: Int = data.clipData!!.itemCount
+        binding.selectPhotos.setOnClickListener {
+            requestPermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
 
-                for (i in 0 until count) {
-                    val imageURI: Uri = data.clipData!!.getItemAt(i).uri
+        viewModel.intent.observe(viewLifecycleOwner) { intent ->
+            getPhotos.launch(intent)
+        }
 
-                    pickedImgUris.add(imageURI)
-                }
-
-                imageView.setImageURI(pickedImgUris[0])
-                position = 0
-            } else {
-                val imageUri: Uri? = data.data
-
-                if (imageUri != null) {
-                    pickedImgUris.add(imageUri)
-                }
-
-                imageView.setImageURI(pickedImgUris[0])
-                position = 0
-            }
-        } else {
-            Toast.makeText(context, "Nie wybrano zdjęcia", Toast.LENGTH_SHORT).show()
+        binding.sendPhotos.setOnClickListener {
+            context?.let { context -> viewModel.sendPhotos(context) }
         }
     }
 
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
-
-        startActivityForResult(intent, pickImage)
+    private val getPhotos = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getSelectedPhotos(result.data!!)
+        }
     }
 
-    private fun selectAndSendFiles() {
-
-    }
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                viewModel.openGallery()
+            } else {
+                messageProvider.toastMessage("No permission")
+            }
+        }
 }

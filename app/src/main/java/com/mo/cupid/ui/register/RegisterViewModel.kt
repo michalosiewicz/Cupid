@@ -1,15 +1,14 @@
 package com.mo.cupid.ui.register
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mo.cupid.constants.Constants
-import com.mo.cupid.constants.Constants.SERVER_IP
-import com.vishnusivadas.advanced_httpurlconnection.PutData
+import com.mo.cupid.db.ConnectToDB
 
 class RegisterViewModel : ViewModel() {
+
+    private val connectToDB = ConnectToDB()
 
     private val _registerInSuccess = MutableLiveData<String>()
     val registerInSuccess: LiveData<String>
@@ -23,41 +22,37 @@ class RegisterViewModel : ViewModel() {
     val userName = MutableLiveData("")
     val password = MutableLiveData("")
 
+    val areInputsCorrect = MediatorLiveData<Boolean>().apply {
+
+        addSource(email) {
+            value =
+                !email.value.isNullOrEmpty() && !userName.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+        }
+
+        addSource(userName) {
+            value =
+                !email.value.isNullOrEmpty() && !userName.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+        }
+        addSource(password) {
+            value =
+                !email.value.isNullOrEmpty() && !userName.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+        }
+    }
+
     fun registerUser() {
-        if (userName.value != "" && password.value != "" && email.value != "") {
-            val handler = Handler(Looper.getMainLooper())
-            handler.post {
-                val field = arrayOfNulls<String>(3)
-                field[0] = "username"
-                field[1] = "password"
-                field[2] = "email"
+        val userNameToDB = userName.value ?: ""
+        val passwordToDB = password.value ?: ""
+        val emailToDB = email.value ?: ""
 
-                val data = arrayOfNulls<String>(3)
-                data[0] = userName.value
-                data[1] = password.value
-                data[2] = email.value
-
-                val putData = PutData(
-                    "http://$SERVER_IP/cupid-project/database/signup.php",
-                    "POST",
-                    field,
-                    data
-                )
-
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        when (putData.result) {
-                            "1" -> _registerInSuccess.value = "Rejestracja zakończona powodzeniem "
-                            "0" -> _registerInError.value = "Rejestracja zakończona niepowodzeniem"
-                            "-1" -> _registerInError.value = "Błąd - połączenie"
-                            "-2" -> _registerInError.value = "Błąd - uzupełnij wszystkie pola"
-                        }
-
-                    }
-                }
-            }
-        } else {
-            _registerInError.value = "Błąd - uzupełnij wszystkie pola"
+        val result = connectToDB.connectToDB(
+            arrayOf("username", "password", "email"),
+            arrayOf(userNameToDB, passwordToDB, emailToDB),
+            "signup.php"
+        )
+        when (result) {
+            "1" -> _registerInSuccess.value = "Success sign up"
+            "0" -> _registerInError.value = "Registration failed"
+            "-1" -> _registerInError.value = "Error - connection"
         }
     }
 }

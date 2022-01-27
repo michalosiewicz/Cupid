@@ -8,12 +8,16 @@
         android:id="@+id/cameraFragment"
         android:name="com.mo.cupid.ui.camera.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera"/>
+        tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.mo.cupid.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.mo.cupid.ui.login.LogInFragment"
@@ -23,8 +27,8 @@
             android:id="@+id/action_logInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_logInFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            android:id="@+id/action_logInFragment_to_joinEventFragment"
+            app:destination="@id/joinEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -46,5 +50,47 @@
         <action
             android:id="@+id/action_menuFragment_to_galleryFragment"
             app:destination="@id/galleryFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_editorFragment"
+            app:destination="@id/editorFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_joinEventFragment"
+            app:destination="@id/joinEventFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editorFragment"
+        android:name="com.mo.cupid.ui.editor.EditorFragment"
+        android:label="fragment_editor"
+        tools:layout="@layout/fragment_editor">
+        <action
+            android:id="@+id/action_editorFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinEventFragment"
+        android:name="com.mo.cupid.ui.event.join.JoinEventFragment"
+        android:label="fragment_join_event"
+        tools:layout="@layout/fragment_join_event">
+        <action
+            android:id="@+id/action_joinEventFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+        <action
+            android:id="@+id/action_joinEventFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_joinEventFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.mo.cupid.ui.event.create.CreateEventFragment"
+        android:label="fragment_create_event"
+        tools:layout="@layout/fragment_create_event">
+        <action
+            android:id="@+id/action_createEventFragment_to_joinEventFragment"
+            app:destination="@id/joinEventFragment" />
     </fragment>
 </navigation>
